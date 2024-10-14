@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráficas de KPI y Métricas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .graficas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .grafica-container {
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        canvas {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <header class="header-container">
+        <div class="header-title">
+            <h1>Dashboard de Pedidos - Gráficas</h1>
+        </div>
+        <nav class="navbar">
+            <ul>
+                <li><a href="/" class="btn-nav">Pedidos Actuales</a></li>
+                <li><a href="/historial/dia" class="btn-nav">Historial de Hoy</a></li>
+                <li><a href="/historial/semana" class="btn-nav">Historial de la Semana</a></li>
+                <li><a href="/historial/mes" class="btn-nav">Historial del Mes</a></li>
+                <li><a href="/graficas" class="btn-nav">Gráficas de KPI</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="graficas" class="graficas-grid">
+        <div class="grafica-container">
+            <canvas id="productosMasVendidos"></canvas>
+        </div>
+        <div class="grafica-container">
+            <canvas id="zonasDeEntrega"></canvas>
+        </div>
+        <div class="grafica-container">
+            <canvas id="horariosPico"></canvas>
+        </div>
+    </section>
+
+    <script src="{{ url_for('static', filename='graficas.js') }}"></script>
+</body>
+</html>

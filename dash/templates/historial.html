@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Pedidos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos.css') }}">
+</head>
+<body>
+    <header class="header-container">
+        <div class="header-title">
+            <h1>Dashboard de Pedidos</h1>
+        </div>
+        
+        <!-- Menú hamburguesa -->
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+
+        <!-- Menú de navegación que será desplegable -->
+        <nav class="nav-menu" id="nav-menu">
+            <ul>
+                <li><a href="/" class="btn-nav">Pedidos Actuales</a></li>
+                <li><a href="/historial/dia" class="btn-nav">Historial de Hoy</a></li>
+                <li><a href="/historial/semana" class="btn-nav">Historial de la Semana</a></li>
+                <li><a href="/historial/mes" class="btn-nav">Historial del Mes</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="historial">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID Pedido</th>
+                    <th>Cliente</th>
+                    <th>Producto</th>
+                    <th>Dirección</th>
+                    <th>Estado</th>
+                    <th>Hora del Pedido</th>
+                    <th>Retiro</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pedido in pedidos %}
+                <tr>
+                    <td>{{ pedido.id }}</td>
+                    <td>{{ pedido.cliente }}</td>
+                    <td>{{ pedido.producto }}</td>
+                    <td>{{ pedido.direccion }}</td>
+                    <td>{{ pedido.estado }}</td>
+                    <td>{{ pedido.hora }}</td>
+                    <td>{{ pedido.retiro }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="7">No hay pedidos disponibles para este periodo.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+    <script>
+        // JavaScript para el menú de hamburguesa
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navMenu = document.getElementById('nav-menu');
+
+        mobileMenu.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

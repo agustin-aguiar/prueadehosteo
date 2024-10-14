@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuración</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<body>
+    <header style="background-color: {{ color_barra }};">
+        <div style="display: flex; align-items: center;">
+            <a href="/">
+            <img src="{{ logo_empresa }}" alt="Logo Empresa" style="width: 50px; height: auto;">
+            </a>
+            <h1 style="color: white; margin-left: 5px;">Configuración</h1>
+        </div>
+
+        <!-- Menú hamburguesa -->
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+
+        <!-- Menú de navegación que será desplegable -->
+        <nav class="nav-menu" id="nav-menu">
+            <ul>
+                <li><a href="/" class="btn-nav">Pedidos Actuales</a></li>
+                <li><a href="/historial/dia" class="btn-nav">Historial de Hoy</a></li>
+                <li><a href="/historial/semana" class="btn-nav">Historial de la Semana</a></li>
+                <li><a href="/historial/mes" class="btn-nav">Historial del Mes</a></li>
+                <li><a href="/graficas" class="btn-nav">Gráficas de KPI</a></li>
+                <li><a href="/configuracion" class="btn-nav">Configuración</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="configuracion">
+        <h2>Configuración de la Empresa</h2>
+        <form action="{{ url_for('guardar_configuracion') }}" method="POST" enctype="multipart/form-data">
+            <div>
+                <label for="color_barra">Color de la barra superior:</label>
+                <input type="color" id="color_barra" name="color_barra" value="{{ color_barra }}">
+            </div>
+            <div>
+                <label for="logo_empresa">Subir nuevo logo:</label>
+                <input type="file" id="logo_empresa" name="logo_empresa" accept="image/*">
+            </div>
+            <div>
+                <button type="submit">Guardar Configuración</button>
+            </div>
+        </form>
+    </section>
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+
+    <!-- JavaScript para el menú de hamburguesa -->
+    <script>
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navMenu = document.getElementById('nav-menu');
+
+        mobileMenu.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

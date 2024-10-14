@@ -1,0 +1,318 @@
+/* Estilos globales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: #f0f0f0;
+    color: #10069F;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: #10069F;
+    color: #fff;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin: 0;
+}
+
+/* Menú de hamburguesa */
+.menu-toggle {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    position: fixed; /* Asegura que esté siempre visible */
+    top: 20px;
+    right: 20px; /* Cambia 'left' por 'right' para mover el ícono de hamburguesa a la derecha */
+    z-index: 101; /* Asegura que el ícono esté sobre el contenido */
+}
+
+.menu-toggle .bar {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 4px 0;
+}
+
+/* Ocultar el menú por defecto */
+.nav-menu {
+    position: fixed;
+    right: -250px; /* Mantener el menú fuera de la pantalla por defecto, movido desde la derecha */
+    top: 0;
+    width: 200px; /* Ajustar el ancho del menú */
+    height: 100%; /* Hacer que ocupe toda la altura */
+    background-color: #10069F;
+    transition: right 0.3s ease; /* Animación suave cuando se despliega */
+    z-index: 100; /* Asegura que el menú esté encima del contenido */
+    padding-top: 60px; /* Añadir espacio para la cabecera */
+}
+
+/* Mostrar el menú cuando tenga la clase 'active' */
+.nav-menu.active {
+    right: 0; /* Deslizar el menú hacia la vista desde la derecha */
+}
+
+/* Ajustes de estilo para los elementos de la lista del menú */
+.nav-menu ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.nav-menu li {
+    margin: 10px 0;
+}
+
+.nav-menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    display: block;
+    padding: 8px;
+    border-radius: 5px;
+    background-color: #1c10c5;
+    transition: background-color 0.3s ease;
+}
+
+.nav-menu a:hover {
+    background-color: #575757;
+}
+
+
+/* Resto del CSS... */
+
+.btn-nav {
+    background-color: #1c10c5;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.btn-nav:hover {
+    background-color: #575757;
+}
+
+main {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    min-width: 100%;
+}
+
+/* Contenedor general del dashboard */
+#dashboard {
+    width: 100%;
+    max-width: 1200px;
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s ease-in-out;
+    margin: 0 auto; /* Centra el contenedor horizontalmente */
+}
+
+/* Contenedor de la "caja" para centrar la barra de búsqueda y los filtros */
+.center-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%; /* Igual ancho que la tabla */
+    max-width: 1200px;
+    margin: 20px auto; /* Centrar la caja */
+    background-color: white; /* Color de fondo de la caja */
+    padding: 10px; /* Espaciado interior de la caja */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Añadir una ligera sombra */
+}
+
+/* Contenedor general para la barra de búsqueda y los filtros */
+.search-filters-container {
+    display: flex;
+    justify-content: space-between; /* Distribuir uniformemente la barra de búsqueda y los filtros */
+    align-items: center;
+    width: 100%; /* Que ocupe todo el ancho de la caja */
+    gap: 20px; /* Espaciado entre los elementos */
+}
+
+/* Ajuste de la barra de búsqueda */
+.search-wrapper {
+    display: flex;
+    align-items: center;
+    flex-grow: 2; /* Más espacio para la barra de búsqueda */
+    position: relative;
+}
+
+.search-wrapper .fa-search {
+    font-size: 18px;
+    color: #aaa;
+    margin-right: 10px;
+}
+
+/* Campo de búsqueda */
+.search-bar {
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 25px;
+    border: 1px solid #ccc;
+}
+
+/* Ajuste de los filtros */
+.filters {
+    display: flex;
+    justify-content: space-between;
+    flex-grow: 1;
+    gap: 10px;
+}
+
+.select-filter {
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 25px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+}
+
+/* Ajuste de la tabla */
+table {
+    width: 80%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: white;
+    border-radius: 12px; /* Borde redondeado */
+    overflow: hidden; /* Asegura que el contenido se mantenga dentro de los bordes */
+}
+
+thead {
+    background-color: #10069F;
+    color: #fff;
+    text-align: left;
+    font-weight: bold;
+}
+
+/* Aplicar bordes redondeados solo a las esquinas superiores de la cabecera */
+thead th:first-child {
+    border-top-left-radius: 12px; /* Esquina superior izquierda */
+}
+
+thead th:last-child {
+    border-top-right-radius: 12px; /* Esquina superior derecha */
+}
+
+th, td {
+    padding: 1rem;
+    border-bottom: 1px solid #ddd;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f1f1f1;
+}
+
+/* Redondear esquinas inferiores */
+tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 12px; /* Esquina inferior izquierda */
+}
+
+tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 12px; /* Esquina inferior derecha */
+}
+
+tbody tr:hover {
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+tbody tr:hover td {
+    color: white;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #333;
+    color: #fff;
+    font-size: 0.9rem;
+}
+
+footer p {
+    margin: 0;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Estilos generales para la página de configuración */
+#configuracion {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+}
+
+#configuracion div {
+    margin-bottom: 20px;
+}
+
+#configuracion label {
+    font-size: 18px;
+    margin-right: 10px;
+}
+
+#configuracion input[type="color"] {
+    width: 100px;
+    height: 40px;
+}
+
+#configuracion button {
+    background-color: #1c10c5;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#configuracion button:hover {
+    background-color: #575757;
+}

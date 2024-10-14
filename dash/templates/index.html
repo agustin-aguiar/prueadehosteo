@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Pedidos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+</head>
+
+<body>
+    <header style="background-color: {{ color_barra }};">
+        <div style="display: flex; align-items: center;">
+            <a href="/">
+                <img src="/static/uploads/grido.png" alt="Logo Empresa" style="width: 50px; height: auto;">
+                
+            </a>
+            <h1 style="color: white; margin-left: 5px;">DASHBOARD DE PEDIDOS</h1>
+        </div>
+
+        <!-- Menú hamburguesa -->
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+
+        <!-- Menú de navegación que será desplegable -->
+        <nav class="nav-menu" id="nav-menu">
+            <ul>
+                <li><a href="/" class="btn-nav">Pedidos Actuales</a></li>
+                <li><a href="/historial/dia" class="btn-nav">Historial de Hoy</a></li>
+                <li><a href="/historial/semana" class="btn-nav">Historial de la Semana</a></li>
+                <li><a href="/historial/mes" class="btn-nav">Historial del Mes</a></li>
+                <li><a href="/graficas" class="btn-nav">Gráficas de KPI</a></li>
+                <li><a href="/configuracion" class="btn-nav">Configuración</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="dashboard">
+        <!-- Barra de búsqueda -->
+        <div class="search-filters-container">
+            <div class="search-wrapper">
+                <i class="fa fa-search"></i>
+                <input type="text" id="search" class="search-bar" placeholder="Buscar por cliente, producto, estado..."/>
+            </div>
+            
+            <div class="filters">
+                <select id="filtro-estado" class="select-filter" onchange="filtrarPedidos()">
+                    <option value="">Todos los estados</option>
+                    <option value="Pendiente">Pendiente</option>
+                    <option value="Entregado">Entregado</option>
+                    <option value="Entregado al Repartidor">Entregado al Repartidor</option>
+                </select>
+            
+                <select id="filtro-retiro" class="select-filter" onchange="filtrarPedidos()">
+                    <option value="">Todos los tipos de retiro</option>
+                    <option value="Local">Local</option>
+                    <option value="Delivery">Delivery</option>
+                </select>
+            </div>
+        </div>
+        
+        <!-- Tabla de pedidos -->
+        <table>
+            <thead>
+                <tr>
+                    <th>ID Pedido</th>
+                    <th>Cliente</th>
+                    <th>Producto</th>
+                    <th>Dirección</th>
+                    <th>Estado</th>
+                    <th>Hora del Pedido</th>
+                    <th>Retiro</th>
+                </tr>
+            </thead>
+            <tbody id="pedido-list">
+                <!-- Aquí se cargarán los pedidos -->
+            </tbody>
+        </table>
+        
+        <!-- Contenedor de paginación -->
+        <div id="paginacion"></div>
+    </section>
+    
+    <!-- Modal de detalles -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2></h2>
+            <p id="pedido-detalles"></p>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+
+    <!-- JavaScript para el menú de hamburguesa -->
+    <script>
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navMenu = document.getElementById('nav-menu');
+
+        mobileMenu.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Función para generar iframe dinámico con maps.ie
+        function generarMapa(direccion) {
+            const mapsIeUrl = `https://maps.google.com/maps?width=100%25&height=600&hl=en&q=${encodeURIComponent(direccion)}&t=&z=14&ie=UTF8&iwloc=B&output=embed`;
+            return `<iframe width="300" height="150" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="${mapsIeUrl}"></iframe>`;
+        }
+
+        // Cargar pedidos con previsualización de mapas
+        function cargarPedidos(pedidos) {
+            const tablaPedidos = document.getElementById('pedido-list');
+            tablaPedidos.innerHTML = '';
+
+            pedidos.forEach(pedido => {
+                const fila = document.createElement('tr');
+                fila.innerHTML = `
+                    <td>${pedido.id}</td>
+                    <td>${pedido.cliente}</td>
+                    <td>${pedido.producto}</td>
+                    <td>${generarMapa(pedido.direccion)}</td> <!-- Dirección con iframe de mapa -->
+                    <td>
+                        <select class="estado-pedido">
+                            <option value="Pendiente" ${pedido.estado === "Pendiente" ? "selected" : ""}>Pendiente</option>
+                            <option value="Entregado" ${pedido.estado === "Entregado" ? "selected" : ""}>Entregado</option>
+                            <option value="Entregado al Repartidor" ${pedido.estado === "Entregado al Repartidor" ? "selected" : ""}>Entregado al Repartidor</option>
+                        </select>
+                    </td>
+                    <td>${pedido.hora}</td>
+                    <td>${pedido.retiro}</td>
+                `;
+                tablaPedidos.appendChild(fila);
+            });
+        }
+    </script>
+</body>
+</html>
